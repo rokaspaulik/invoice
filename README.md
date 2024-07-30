@@ -1,6 +1,6 @@
 # Invoice App
 
-A PHP application for creating and managing invoices.
+This project aims to create a simple and user-friendly invoice generator. The focus is on providing a clean, intuitive interface that enables users to quickly and easily create professional-looking invoices.
 
 ## Installation
 1. Clone the repository.
@@ -19,7 +19,16 @@ Create invoices, edit invoice details, and generate PDF or CSV reports.
 * [Add other features here]
 
 ## Contributing
-[Guidelines for contributions, such as code style, testing, etc.]
+
+Here's how you can help:
+
+1. **Fork the repository:** Create your own copy of the project.
+2. **Create a new branch:** Base your work on a new branch.
+3. **Make your changes:** Implement your feature or fix the bug.
+4. **Test thoroughly:** Ensure your changes don't introduce new issues.
+5. **Create a pull request:** Describe your changes clearly and concisely.
+
+Contributions are very appreciated!
 
 ## License
-[Specify the license for your project]
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
