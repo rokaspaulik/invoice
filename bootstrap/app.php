@@ -9,8 +9,12 @@ use App\Actions\CreateInvoice;
 use App\Actions\DeleteInvoices;
 use App\Actions\StoreInvoice;
 use App\Actions\ViewHome;
+use App\Actions\ViewInvoice;
 
-$uri = $_SERVER['REQUEST_URI'];
+$uri = strpos($_SERVER['REQUEST_URI'], '?')
+    ? substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'))
+    : $_SERVER['REQUEST_URI'];
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 // GET routes
@@ -27,6 +31,11 @@ if ($method === 'GET') {
 
     if ($uri === '/delete') {
         $invoke = new DeleteInvoices;
+        $invoke();
+    }
+
+    if ($uri === '/view') {
+        $invoke = new ViewInvoice;
         $invoke();
     }
 }

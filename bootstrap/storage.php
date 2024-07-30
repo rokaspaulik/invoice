@@ -14,7 +14,7 @@ function store_invoice(Invoice $invoice): void
 
 function load_invoice(string $filename): Invoice
 {
-    $path = __DIR__ . '/../storage/' . $filename . '.json';
+    $path = __DIR__ . '/../storage/' . $filename;
     $file = file_get_contents($path);
 
     $data = json_decode($file, true);
