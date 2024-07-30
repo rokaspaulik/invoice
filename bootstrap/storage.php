@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Invoice;
+use App\Models\InvoiceParty;
 
 function store_invoice(Invoice $invoice): void
 {
@@ -11,13 +12,47 @@ function store_invoice(Invoice $invoice): void
     file_put_contents($path, $json);
 }
 
-function load_invoice(string $filename): array
+function load_invoice(string $filename): Invoice
 {
     $path = __DIR__ . '/../storage/' . $filename . '.json';
     $file = file_get_contents($path);
+
     $data = json_decode($file, true);
+    $buyerData = $data['buyer'];
+    $sellerData = $data['seller'];
     
-    return $data;
+    $buyer = new InvoiceParty(
+        name: $buyerData['name'],
+        bankIbanCode: $buyerData['bankIbanCode'],
+        address: $buyerData['address'],
+        companyCode: $buyerData['companyCode'],
+        taxCode: $buyerData['taxCode'],
+        phoneNumber: $buyerData['phoneNumber'],
+        email: $buyerData['email'],
+    );
+
+    $seller = new InvoiceParty(
+        name: $sellerData['name'],
+        bankIbanCode: $sellerData['bankIbanCode'],
+        address: $sellerData['address'],
+        companyCode: $sellerData['companyCode'],
+        taxCode: $sellerData['taxCode'],
+        phoneNumber: $sellerData['phoneNumber'],
+        email: $sellerData['email'],
+    );
+
+    $invoice = new Invoice(
+        series: $data['series'],
+        seriesNumber: $data['seriesNumber'],
+        date: new \DateTime($data['date']['date']),
+        dateDue: new \DateTime($data['dateDue']['date']),
+        seller: $seller,
+        buyer: $buyer,
+        items: $data['items'],
+        notes: $data['notes'],
+    );
+    
+    return $invoice;
 }
 
 function find_all_invoices(): array
