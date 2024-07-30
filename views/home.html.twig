@@ -6,11 +6,19 @@
     <title>My Invoices</title>
 </head>
 <body>
-    <h1>My Invoices</h1>
-    <h3>{{ testing }}</h3>
+    <h1>Invoices App</h1>
 
-    <a href="create">Create</a>
-    <hr>
-    <a href="delete">Delete All</a>
+    <h2>All Invoices</h2>
+    <ul>
+        {% for invoice in invoices %}
+            <li><a href="view?invoice={{ invoice }}">{{ invoice }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h2>Controls</h2>
+    <ul>
+        <li><a href="create">Create</a></li>
+        <li><a href="delete">Delete All</a></li>
+    </ul>
 </body>
 </html>

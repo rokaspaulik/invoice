@@ -8,10 +8,8 @@ class ViewHome
 {
     public function __invoke()
     {
-        find_all_invoices();
-
         view('home', [
-            'testing' => 'testing data working',
+            'invoices' => find_all_invoices(),
         ]);
     }
 }

@@ -20,13 +20,20 @@ function load_invoice(string $filename): array
     return $data;
 }
 
-function find_all_invoices(): void
+function find_all_invoices(): array
 {
     $path = __DIR__ . '/../storage/';
 
     $files = glob($path . '*');
+
+    $invoices = [];
+    foreach ($files as $file) {
+        preg_match('/[^\/\\]]+$/', $file, $matches);
+        $filename = $matches[0];
+        $invoices[] = $filename;
+    }
     
-    var_dump($files);
+    return $invoices;
 }
 
 function delete_all_invoices(): void
