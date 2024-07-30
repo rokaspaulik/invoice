@@ -8,7 +8,7 @@ A PHP application for creating and managing invoices.
 3. Set up database configuration (if applicable).
 
 ## Usage
-To start the application, run `php index.php` (or your preferred entry point).
+To start the application, run `php -S localhost:8888 app.php` (or your preferred entry point for example `php -S localhost:8888 .\bootstrap\app.php`).
 Create invoices, edit invoice details, and generate PDF or CSV reports.
 
 ## Features
