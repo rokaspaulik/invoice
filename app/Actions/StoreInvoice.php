@@ -42,6 +42,6 @@ class StoreInvoice
         );
 
         store_invoice($invoice);
-        redirect('/');
+        http_redirect('/');
     }
 }

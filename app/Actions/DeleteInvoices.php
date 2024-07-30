@@ -9,6 +9,6 @@ class DeleteInvoices
     public function __invoke()
     {
         delete_all_invoices();
-        redirect('/');
+        http_redirect('/');
     }
 }
