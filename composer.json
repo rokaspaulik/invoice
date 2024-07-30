@@ -1,0 +1,19 @@
+{
+    "name": "rokaspaulik/invoice",
+    "description": "Generate billable invoices",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "rokaspaulikas",
+            "email": "rokas.paulikas@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}
