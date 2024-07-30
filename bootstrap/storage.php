@@ -19,3 +19,25 @@ function load_invoice(string $filename): array
     
     return $data;
 }
+
+function find_all_invoices(): void
+{
+    $path = __DIR__ . '/../storage/';
+
+    $files = glob($path . '*');
+    
+    var_dump($files);
+}
+
+function delete_all_invoices(): void
+{
+    $path = __DIR__ . '/../storage/';
+
+    $files = glob($path . '*');
+
+    foreach ($files as $file) {
+        if (is_file($file)) {
+            unlink($file);
+        }
+    }
+}

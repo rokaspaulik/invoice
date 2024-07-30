@@ -6,6 +6,7 @@ require __DIR__ . '/http.php';
 require __DIR__ . '/twig.php';
 
 use App\Actions\CreateInvoice;
+use App\Actions\DeleteInvoices;
 use App\Actions\StoreInvoice;
 use App\Actions\ViewHome;
 
@@ -21,6 +22,11 @@ if ($method === 'GET') {
 
     if ($uri === '/create') {
         $invoke = new CreateInvoice;
+        $invoke();
+    }
+
+    if ($uri === '/delete') {
+        $invoke = new DeleteInvoices;
         $invoke();
     }
 }
