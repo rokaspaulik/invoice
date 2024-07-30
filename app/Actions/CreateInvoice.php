@@ -8,6 +8,9 @@ class CreateInvoice
 {
     public function __invoke()
     {
-        view('create');
+        view('create', [
+            'prefillDate' => (new \DateTime())->format('Y-m-d'),
+            'prefillDueDate' => (new \DateTime())->format('Y-m-t'),
+        ]);
     }
 }

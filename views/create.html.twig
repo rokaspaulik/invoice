@@ -57,20 +57,20 @@ button:hover {
         <input type="text" id="series_number" name="series_number" required>
 
         <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
+        <input type="date" id="date" name="date" value={{ prefillDate }} required>
 
         <label for="date_due">Date Due:</label>
-        <input type="date" id="date_due" name="date_due" required>
+        <input type="date" id="date_due" name="date_due" value={{ prefillDueDate }} required>
 
         <h2>Seller Information</h2>
         <label for="seller_name">Name:</label>
-        <input type="text" id="seller_name" name="seller_name" required>
+        <input type="text" id="seller_name" name="seller_name" autocomplete="name" required>
 
         <label for="seller_bank_iban">Bank IBAN:</label>
         <input type="text" id="seller_bank_iban" name="seller_bank_iban">
 
         <label for="seller_address">Address:</label>   
-        <input type="text" id="seller_address" name="seller_address">
+        <input type="text" id="seller_address" name="seller_address" autocomplete="address">
 
         <label for="seller_company_code">Company Code:</label>
         <input type="text" id="seller_company_code" name="seller_company_code">
@@ -79,10 +79,10 @@ button:hover {
         <input type="text" id="seller_tax_code" name="seller_tax_code">
 
         <label for="seller_phone_number">Phone Number:</label>
-        <input type="tel" id="seller_phone_number" name="seller_phone_number">
+        <input type="tel" id="seller_phone_number" name="seller_phone_number" autocomplete="tel">
 
         <label for="seller_email">Email:</label>
-        <input type="email" id="seller_email" name="seller_email">
+        <input type="email" id="seller_email" name="seller_email" autocomplete="email">
 
         <h2>Buyer Information</h2>
         <label for="buyer_name">Name:</label>
