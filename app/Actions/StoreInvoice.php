@@ -41,9 +41,10 @@ class StoreInvoice
             items: [],
         );
 
-        $json = json_encode($invoice);
+        $filename = trim($_POST['series']) . '-' . trim($_POST['series_number'] . time());
+        $jsonData = json_encode($invoice);
 
-        echo $json;
-        // var_dump($json);
+        store($filename, $jsonData);
+        redirect('/');
     }
 }

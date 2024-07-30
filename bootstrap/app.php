@@ -1,6 +1,8 @@
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/storage.php';
+require __DIR__ . '/http.php';
 require __DIR__ . '/twig.php';
 
 use App\Actions\CreateInvoice;
