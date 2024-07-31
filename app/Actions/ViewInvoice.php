@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions;
 
-use App\Services\WordDocGenerator;
+use App\Services\InvoiceDocumentGenerator;
 
 class ViewInvoice
 {
@@ -12,8 +12,7 @@ class ViewInvoice
     {
         $invoice = load_invoice($_GET['invoice']);
 
-        $generator = new WordDocGenerator($invoice);
-        $generator->generate();
+        (new InvoiceDocumentGenerator($invoice))->generate();
 
         echo "<pre>";
         print_r($invoice);

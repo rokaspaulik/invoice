@@ -9,7 +9,7 @@ use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\TextAlignment;
 
-class WordDocGenerator
+class InvoiceDocumentGenerator
 {
     private const FILE_PATH = 'storage/output/';
     private const TABLE_BS_CELL_WIDTH = 5000;
