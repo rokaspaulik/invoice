@@ -7,14 +7,14 @@ function store_invoice(Invoice $invoice): void
 {
     $json = json_encode($invoice);
     $filename = trim($invoice->getSeries()) . '_' . trim($invoice->getSeriesNumber() . '-' . time());
-    $path = __DIR__ . '/../storage/' . $filename . '.json';
+    $path = __DIR__ . '/../storage/invoices/' . $filename . '.json';
 
     file_put_contents($path, $json);
 }
 
 function load_invoice(string $filename): Invoice
 {
-    $path = __DIR__ . '/../storage/' . $filename;
+    $path = __DIR__ . '/../storage/invoices/' . $filename;
     $file = file_get_contents($path);
 
     $data = json_decode($file, true);
@@ -57,7 +57,7 @@ function load_invoice(string $filename): Invoice
 
 function find_all_invoices(): array
 {
-    $path = __DIR__ . '/../storage/';
+    $path = __DIR__ . '/../storage/invoices/';
 
     $files = glob($path . '*');
 
@@ -73,7 +73,7 @@ function find_all_invoices(): array
 
 function delete_all_invoices(): void
 {
-    $path = __DIR__ . '/../storage/';
+    $path = __DIR__ . '/../storage/invoices/';
 
     $files = glob($path . '*');
 
