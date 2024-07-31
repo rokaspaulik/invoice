@@ -28,30 +28,30 @@ class WordDocGenerator
         $font = ['bold' => true, 'size' => 18];
         $paragraph = ['alignment' => TextAlignment::CENTER, 'spaceAfter' => 240];
         $section = $word->addSection(['breakType' => 'continuous']);
-        $section = $section->addText('SĄSKAITA FAKTŪRA', $font, $paragraph);
+        $section->addText('SĄSKAITA FAKTŪRA', $font, $paragraph);
 
         // Series section
         $font = ['size' => 9];
         $paragraph = ['alignment' => TextAlignment::CENTER];
         $section = $word->addSection(['breakType' => 'continuous']);
-        $section = $section->addText(sprintf('Serija %s Nr. %s', $this->invoice->getSeries(), $this->invoice->getSeriesNumber()), $font, $paragraph);
+        $section->addText(sprintf('Serija %s Nr. %s', $this->invoice->getSeries(), $this->invoice->getSeriesNumber()), $font, $paragraph);
 
         // Date section
         $font = ['size' => 9];
         $paragraph = ['alignment' => TextAlignment::CENTER];
         $section = $word->addSection(['breakType' => 'continuous']);
-        $section = $section->addText(sprintf('Sąskaitos data %s', $this->invoice->getDate()->format('Y-m-d'), $this->invoice->getSeriesNumber()), $font, $paragraph);
+        $section->addText(sprintf('Sąskaitos data %s', $this->invoice->getDate()->format('Y-m-d'), $this->invoice->getSeriesNumber()), $font, $paragraph);
 
         // Date due section
         $font = ['size' => 9];
         $paragraph = ['alignment' => TextAlignment::CENTER, 'spaceAfter' => 400];
         $section = $word->addSection(['breakType' => 'continuous']);
-        $section = $section->addText(sprintf('Apmokėti iki %s', $this->invoice->getDateDue()->format('Y-m-d'), $this->invoice->getSeriesNumber()), $font, $paragraph);
+        $section->addText(sprintf('Apmokėti iki %s', $this->invoice->getDateDue()->format('Y-m-d'), $this->invoice->getSeriesNumber()), $font, $paragraph);
 
         // Seller section
         $font = ['bold' => true, 'size' => 9];
         $section = $word->addSection(['breakType' => 'continuous']);
-        $section = $section->addText('Pirkėjas', $font);
+        $section->addText('Pirkėjas', $font);
 
         foreach ($sellerInfo as $info) {
             if (empty($info) || !is_string($info)) {
@@ -60,22 +60,22 @@ class WordDocGenerator
 
             $font = ['size' => 9];
             $section = $word->addSection(['breakType' => 'continuous']);
-            $section = $section->addText($info, $font);
+            $section->addText($info, $font);
         }
 
         // Buyer section
         $font = ['bold' => true, 'size' => 9];
         $section = $word->addSection(['breakType' => 'continuous']);
-        $section = $section->addText('Pardavėjas', $font);
+        $section->addText('Pardavėjas', $font);
 
+        $section = $word->addSection(['breakType' => 'continuous', 'colsNum' => 2]);
         foreach ($buyerInfo as $info) {
             if (empty($info) || !is_string($info)) {
                 continue;
             }
 
             $font = ['size' => 9];
-            $section = $word->addSection(['breakType' => 'continuous']);
-            $section = $section->addText($info, $font);
+            $section->addText($info, $font);
         }
 
         $this->exportAsWord($word);
