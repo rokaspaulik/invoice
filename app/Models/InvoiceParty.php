@@ -43,6 +43,19 @@ class InvoiceParty implements JsonSerializable
         return $this->phoneNumber;
     }
 
+    public function getInfo(): array
+    {
+        return [
+            $this->name,
+            $this->companyCode,
+            $this->taxCode,
+            $this->address,
+            $this->phoneNumber,
+            $this->email,
+            $this->bankIbanCode,
+        ];
+    }
+
     public function jsonSerialize(): mixed
     {
         return [
