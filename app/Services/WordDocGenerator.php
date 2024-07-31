@@ -12,7 +12,7 @@ use PhpOffice\PhpWord\SimpleType\TextAlignment;
 class WordDocGenerator
 {
     private const FILE_PATH = 'storage/output/';
-    private const TABLE_BS_CELL_WIDTH = 4000;
+    private const TABLE_BS_CELL_WIDTH = 5000;
     private const TABLE_BS_ROWS = 10;
     private const TABLE_BS_COLS = 2;
 
@@ -57,8 +57,8 @@ class WordDocGenerator
 
         $font = ['bold' => true, 'size' => 9];
         $section = $word->addSection(['breakType' => 'continuous']);
-        $table->addCell(self::TABLE_BS_CELL_WIDTH)->addText('Pirkėjas', $font);
         $table->addCell(self::TABLE_BS_CELL_WIDTH)->addText('Pardavėjas', $font);
+        $table->addCell(self::TABLE_BS_CELL_WIDTH)->addText('Pirkėjas', $font);
 
         $font = ['size' => 9];
         for ($row = 1; $row <= self::TABLE_BS_ROWS; ++$row) {
@@ -83,10 +83,23 @@ class WordDocGenerator
         $money = MoneyHandler::fromCents(23450);
         $moneyWords = MoneyHandler::moneyToWords($money);
 
-        // Date section
+        // Money in words section
         $font = ['size' => 9];
+        $paragraph = ['spaceBefore' => 1000, 'spaceAfter' => 500];
         $section = $word->addSection(['breakType' => 'continuous']);
-        $section->addText(sprintf('Suma žodžiais: %s', $moneyWords));
+        $section->addText(sprintf('Suma žodžiais: %s', $moneyWords), $font, $paragraph);
+
+        // Seller credentials section
+        $font = ['size' => 9];
+        $paragraph = ['spaceAfter' => 500];
+        $section = $word->addSection(['breakType' => 'continuous']);
+        $section->addText(sprintf('Sąskaitą išrašė: %s', $this->invoice->getSeller()->getName()), $font, $paragraph);
+
+        // Buyer credentials section
+        $font = ['size' => 9];
+        $paragraph = ['spaceAfter' => 500];
+        $section = $word->addSection(['breakType' => 'continuous']);
+        $section->addText('Sąskaitą priėmė: _______________________________', $font, $paragraph);
 
         $this->exportAsWord($word);
     }
