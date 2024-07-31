@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
+use App\Models\Money;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\SimpleType\Jc;
 use PhpOffice\PhpWord\SimpleType\TextAlignment;
 
 class InvoiceDocumentGenerator
@@ -77,13 +80,51 @@ class InvoiceDocumentGenerator
             }
         }
 
-        // TODO: add items table with total
+        // Invoice items table
+        $table = $section->addTable();
+        $table->addRow();
 
-        // Money in words section
+        $font = ['bold' => true, 'size' => 9];
+        $section = $word->addSection(['breakType' => 'continuous']);
+        $table->addCell(2000)->addText('Pavadinimas', $font);
+        $table->addCell(2000)->addText('Kiekis', $font);
+        $table->addCell(2000)->addText('Matas', $font);
+        $table->addCell(2000)->addText('Kaina', $font);
+        $table->addCell(2000)->addText('Iš viso', $font);
+
+        $font = ['size' => 9];
+        foreach ($this->invoice->getItems() as $item) {
+            $table->addRow();
+
+            $invoiceItem = new InvoiceItem(
+                name: $item['name'],
+                amount: (int) $item['amount'],
+                unit: $item['unit'],
+                money: new Money(
+                    amount: $item['money']['amount'],
+                    cents: $item['money']['cents'],
+                    currency: $item['money']['currency'],
+                ),
+            );
+
+            $itemTotalMoneyObject = MoneyHandler::calculateInvoiceItemTotal($invoiceItem);
+
+            $table->addCell(2000)->addText($invoiceItem->getName(), $font);
+            $table->addCell(2000)->addText($invoiceItem->getAmount(), $font);
+            $table->addCell(2000)->addText($invoiceItem->getUnit(), $font);
+            $table->addCell(2000)->addText(MoneyHandler::format($invoiceItem->getMoney()), $font);
+            $table->addCell(2000)->addText(MoneyHandler::format($itemTotalMoneyObject), $font);
+        }
+
+        // Total section
         $invoiceCents = MoneyHandler::calculateInvoiceTotalInCents($this->invoice);
         $money = MoneyHandler::fromCents($invoiceCents);
-        $moneyWords = MoneyHandler::moneyToWords($money);
+        $table->addRow();
+        $table->addCell(8000)->addText('Bendra suma', ['bold' => true, 'size' => 9], ['spaceBefore' => 400, 'alignment' => Jc::END]);
+        $table->addCell(1000)->addText(MoneyHandler::format($money), ['size' => 9], ['spaceBefore' => 400]);
 
+        // Money words section
+        $moneyWords = MoneyHandler::moneyToWords($money);
         $font = ['size' => 9];
         $paragraph = ['spaceBefore' => 1000, 'spaceAfter' => 500];
         $section = $word->addSection(['breakType' => 'continuous']);

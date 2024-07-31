@@ -5,11 +5,17 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use App\Models\Money;
 use NumberFormatter;
 
 class MoneyHandler
 {
+    public static function format(Money $money): string
+    {
+        return sprintf('%s.%02d €', $money->getAmount(), $money->getCents());
+    }
+
     public static function fromCents(int $cents): Money
     {
         return new Money(
@@ -24,6 +30,19 @@ class MoneyHandler
         $cents = (int) (floatval($amount) * 100);
 
         return self::fromCents($cents);
+    }
+
+    public static function calculateInvoiceItemTotal(InvoiceItem $invoiceItem): Money
+    {
+        $money = $invoiceItem->getMoney();
+
+        $invoiceAmount = $invoiceItem->getAmount() * $money->getAmount();
+        $invoiceAmountCents = (int) (floatval($invoiceAmount) * 100);
+
+        $invoiceCents = $invoiceItem->getAmount() * $money->getCents();
+        $totalCents = $invoiceAmountCents + $invoiceCents;
+
+        return self::fromCents($totalCents);
     }
 
     public static function calculateInvoiceTotalInCents(Invoice $invoice): int
