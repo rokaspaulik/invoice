@@ -67,15 +67,26 @@ class WordDocGenerator
             for ($col = 1; $col <= self::TABLE_BS_COLS; ++$col) {
                 if ($col % 2) {
                     // Add seller info
-                    $value = !empty($sellerInfo) ? array_pop($sellerInfo) : '';
+                    $value = !empty($sellerInfo) ? array_shift($sellerInfo) : '';
                     $table->addCell(self::TABLE_BS_CELL_WIDTH)->addText($value, $font);
                     continue;
                 }
                 // Add buyer info
-                $value = !empty($buyerInfo) ? array_pop($buyerInfo) : '';
+                $value = !empty($buyerInfo) ? array_shift($buyerInfo) : '';
                 $table->addCell(self::TABLE_BS_CELL_WIDTH)->addText($value, $font);
             }
         }
+
+        // TODO: add items table with total
+
+        // TODO: this is just for testing later remove and calculate all invoice items
+        $money = MoneyHandler::fromCents(23450);
+        $moneyWords = MoneyHandler::moneyToWords($money);
+
+        // Date section
+        $font = ['size' => 9];
+        $section = $word->addSection(['breakType' => 'continuous']);
+        $section->addText(sprintf('Suma žodžiais: %s', $moneyWords));
 
         $this->exportAsWord($word);
     }
