@@ -16,7 +16,7 @@ class Invoice implements JsonSerializable
         private InvoiceParty $seller,
         private InvoiceParty $buyer,
         private array $items,
-        private ?array $notes = null,
+        private ?string $notes = null,
     ) {}
 
     public function getSeries(): string
@@ -103,12 +103,12 @@ class Invoice implements JsonSerializable
         return $this;
     }
 
-    public function getNotes(): ?array
+    public function getNotes(): ?string
     {
         return $this->notes;
     }
 
-    public function setNotes(?array $notes): self
+    public function setNotes(?string $notes): self
     {
         $this->notes = $notes;
 

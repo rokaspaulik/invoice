@@ -142,6 +142,11 @@ class InvoiceDocumentGenerator
         $section = $word->addSection(['breakType' => 'continuous']);
         $section->addText('Sąskaitą priėmė: _______________________________', $font, $paragraph);
 
+        // Notes section
+        $section->addText('Pastabos', ['size' => 9, 'bold' => true], ['spaceAfter' => 100]);
+        $section = $word->addSection(['breakType' => 'continuous']);
+        $section->addText($this->invoice->getNotes(), ['size' => 9]);
+
         $this->exportAsWord($word);
     }
 

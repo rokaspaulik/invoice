@@ -51,6 +51,7 @@ class StoreInvoice
             seller: $seller,
             buyer: $buyer,
             items: $items,
+            notes: $_POST['notes'],
         );
 
         store_invoice($invoice);
