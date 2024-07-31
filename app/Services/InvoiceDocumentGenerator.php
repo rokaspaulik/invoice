@@ -79,11 +79,11 @@ class InvoiceDocumentGenerator
 
         // TODO: add items table with total
 
-        // TODO: this is just for testing later remove and calculate all invoice items
-        $money = MoneyHandler::fromCents(23450);
+        // Money in words section
+        $invoiceCents = MoneyHandler::calculateInvoiceTotalInCents($this->invoice);
+        $money = MoneyHandler::fromCents($invoiceCents);
         $moneyWords = MoneyHandler::moneyToWords($money);
 
-        // Money in words section
         $font = ['size' => 9];
         $paragraph = ['spaceBefore' => 1000, 'spaceAfter' => 500];
         $section = $word->addSection(['breakType' => 'continuous']);

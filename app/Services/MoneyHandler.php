@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Invoice;
 use App\Models\Money;
 use NumberFormatter;
 
@@ -16,6 +17,31 @@ class MoneyHandler
             cents: self::calculateRemainderCents($cents),
             currency: 'EUR',
         );
+    }
+
+    public static function fromAmountString(string $amount): Money
+    {
+        $cents = (int) (floatval($amount) * 100);
+
+        return self::fromCents($cents);
+    }
+
+    public static function calculateInvoiceTotalInCents(Invoice $invoice): int
+    {
+        $total = 0;
+
+        foreach ($invoice->getItems() as $item) {
+            $itemMoney = new Money(
+                amount: $item['money']['amount'],
+                cents: $item['money']['cents'],
+                currency: $item['money']['currency'],
+            );
+
+            $itemCents = $itemMoney->getAmount() * 100 + $itemMoney->getCents();
+            $total += $itemCents * $item['amount'];
+        }
+
+        return $total;
     }
 
     public static function moneyToWords(Money $money, $lang = 'lt'): string

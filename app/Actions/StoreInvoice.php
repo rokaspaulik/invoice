@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use App\Models\InvoiceParty;
+use App\Services\MoneyHandler;
 
 class StoreInvoice
 {
@@ -31,6 +33,16 @@ class StoreInvoice
             email: empty($_POST['seller_email']) ? null : $_POST['seller_email'],
         );
 
+        $items = [];
+        foreach ($_POST['item'] as $item) {
+            $items[] = new InvoiceItem(
+                name: $item['name'],
+                amount: (int) $item['amount'],
+                unit: $item['unit'],
+                money: MoneyHandler::fromAmountString($item['price']),
+            );
+        }
+
         $invoice = new Invoice(
             series: $_POST['series'],
             seriesNumber: $_POST['series_number'],
@@ -38,7 +50,7 @@ class StoreInvoice
             dateDue: new \DateTime($_POST['date_due']),
             seller: $seller,
             buyer: $buyer,
-            items: [],
+            items: $items,
         );
 
         store_invoice($invoice);

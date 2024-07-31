@@ -16,7 +16,7 @@ h1 {
 }
 
 form {
-  max-width: 600px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -49,7 +49,7 @@ button:hover {
 <body>
     <h1>Create Invoice</h1>
 
-    <form method="post" action="create">
+    <form method="post" action="create" id="createInvoiceForm">
         <label for="series">Series:</label>
         <input type="text" id="series" name="series" required>
 
@@ -107,10 +107,75 @@ button:hover {
         <input type="text" id="buyer_email" name="buyer_email">
 
         <h2>Invoice Items</h2>
-        <label for="notes">Notes:</label>
-        <textarea id="notes" name="notes"></textarea>
+        <button type="button" onclick="addItem()">Add Item</button>
 
-        <button type="submit">Create Invoice</button>
+        <div class="invoice-items" id="invoice-items">
+          <div class="form-group item-row">
+            <label for="name1">Name:</label>
+            <input type="text" id="name1" name="item[0][name]">
+
+            <label for="amount1">Amount:</label>
+            <input type="number" id="amount1" name="item[0][amount]">
+
+            <label for="unit1">Unit:</label>
+            <input type="text" id="unit1" name="item[0][unit]">
+
+            <label for="price1">Price (EUR):</label>
+            <input type="number" step="0.01" id="price1" name="item[0][price]">
+          </div>
+        </div>
+
+        <div class="notes" style="padding-top: 32px">
+          <label for="notes">Notes:</label>
+          <textarea id="notes" name="notes"></textarea>
+
+          <button type="submit">Create Invoice</button>
+        </div>
     </form>
+
+    <script>
+      let itemCount = 1;
+
+      function addItem() {
+        const invoiceItemsDiv = document.getElementById('invoice-items');
+        const newItemRow = document.createElement('div');
+        newItemRow.classList.add('form-group', 'item-row');
+
+        const itemIndex = ++itemCount;
+
+        // Create input fields
+        const nameInput = createInput('text', `name${itemIndex}`, `item[${itemIndex}][name]`, 'Name:');
+        const amountInput = createInput('number', `amount${itemIndex}`, `item[${itemIndex}][amount]`, 'Amount:');
+        const unitInput = createInput('text', `unit${itemIndex}`, `item[${itemIndex}][unit]`, 'Unit:');
+        const priceInput = createInput('number', `price${itemIndex}`, `item[${itemIndex}][price]`, 'Price (EUR):', '0.01');
+
+        newItemRow.appendChild(nameInput);
+        newItemRow.appendChild(amountInput);
+        newItemRow.appendChild(unitInput);
+        newItemRow.appendChild(priceInput);
+
+        invoiceItemsDiv.appendChild(newItemRow);
+      }
+
+      function createInput(type, id, name, labelText, step = null) {
+        const label = document.createElement('label');
+        label.htmlFor = id;
+        label.textContent = labelText;
+
+        const input = document.createElement('input');
+        input.type = type;
+        input.id = id;
+        input.name = name;
+        if (step) {
+          input.step = step;
+        }
+
+        const inputContainer = document.createElement('div');
+        inputContainer.appendChild(label);
+        inputContainer.appendChild(input);
+
+        return inputContainer;
+      }
+    </script>
 </body>
 </html>
