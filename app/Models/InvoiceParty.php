@@ -45,7 +45,7 @@ class InvoiceParty implements JsonSerializable
 
     public function getInfo(): array
     {
-        return [
+        $info = [
             $this->name,
             $this->companyCode,
             $this->taxCode,
@@ -54,6 +54,8 @@ class InvoiceParty implements JsonSerializable
             $this->email,
             $this->bankIbanCode,
         ];
+
+        return array_values(array_filter($info));
     }
 
     public function jsonSerialize(): mixed

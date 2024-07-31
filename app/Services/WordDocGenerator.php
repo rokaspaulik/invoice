@@ -12,6 +12,9 @@ use PhpOffice\PhpWord\SimpleType\TextAlignment;
 class WordDocGenerator
 {
     private const FILE_PATH = 'storage/output/';
+    private const TABLE_BS_CELL_WIDTH = 4000;
+    private const TABLE_BS_ROWS = 10;
+    private const TABLE_BS_COLS = 2;
 
     public function __construct(
         private Invoice $invoice,
@@ -48,34 +51,30 @@ class WordDocGenerator
         $section = $word->addSection(['breakType' => 'continuous']);
         $section->addText(sprintf('Apmokėti iki %s', $this->invoice->getDateDue()->format('Y-m-d'), $this->invoice->getSeriesNumber()), $font, $paragraph);
 
-        // Seller section
+        // Buyer and seller table section
+        $table = $section->addTable();
+        $table->addRow();
+
         $font = ['bold' => true, 'size' => 9];
         $section = $word->addSection(['breakType' => 'continuous']);
-        $section->addText('Pirkėjas', $font);
+        $table->addCell(self::TABLE_BS_CELL_WIDTH)->addText('Pirkėjas', $font);
+        $table->addCell(self::TABLE_BS_CELL_WIDTH)->addText('Pardavėjas', $font);
 
-        foreach ($sellerInfo as $info) {
-            if (empty($info) || !is_string($info)) {
-                continue;
+        $font = ['size' => 9];
+        for ($row = 1; $row <= self::TABLE_BS_ROWS; ++$row) {
+            $table->addRow();
+
+            for ($col = 1; $col <= self::TABLE_BS_COLS; ++$col) {
+                if ($col % 2) {
+                    // Add seller info
+                    $value = !empty($sellerInfo) ? array_pop($sellerInfo) : '';
+                    $table->addCell(self::TABLE_BS_CELL_WIDTH)->addText($value, $font);
+                    continue;
+                }
+                // Add buyer info
+                $value = !empty($buyerInfo) ? array_pop($buyerInfo) : '';
+                $table->addCell(self::TABLE_BS_CELL_WIDTH)->addText($value, $font);
             }
-
-            $font = ['size' => 9];
-            $section = $word->addSection(['breakType' => 'continuous']);
-            $section->addText($info, $font);
-        }
-
-        // Buyer section
-        $font = ['bold' => true, 'size' => 9];
-        $section = $word->addSection(['breakType' => 'continuous']);
-        $section->addText('Pardavėjas', $font);
-
-        $section = $word->addSection(['breakType' => 'continuous', 'colsNum' => 2]);
-        foreach ($buyerInfo as $info) {
-            if (empty($info) || !is_string($info)) {
-                continue;
-            }
-
-            $font = ['size' => 9];
-            $section->addText($info, $font);
         }
 
         $this->exportAsWord($word);
