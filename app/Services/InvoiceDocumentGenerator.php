@@ -86,9 +86,9 @@ class InvoiceDocumentGenerator
 
         $font = ['bold' => true, 'size' => 9];
         $section = $word->addSection(['breakType' => 'continuous']);
-        $table->addCell(2000)->addText('Pavadinimas', $font);
-        $table->addCell(2000)->addText('Kiekis', $font);
-        $table->addCell(2000)->addText('Matas', $font);
+        $table->addCell(4000)->addText('Pavadinimas', $font);
+        $table->addCell(1000)->addText('Kiekis', $font);
+        $table->addCell(1000)->addText('Matas', $font);
         $table->addCell(2000)->addText('Kaina', $font);
         $table->addCell(2000)->addText('Iš viso', $font);
 
