@@ -11,9 +11,9 @@ This project aims to create a simple and user-friendly invoice generator. The fo
 2. Open browser and go to [localhost:8888](http://localhost:8888/).
 
 ## Features
-* Create and manage invoices
-* Add and edit invoice items
-* Generate PDF and Word invoice documents
+* Create and manage invoices.
+* Add and edit invoice items.
+* Generate PDF and Word invoice documents.
 
 ## Contributing
 
