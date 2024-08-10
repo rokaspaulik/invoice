@@ -15,6 +15,10 @@ This project aims to create a simple and user-friendly invoice generator. The fo
 * Add and edit invoice items.
 * Generate PDF and Word invoice documents.
 
+## Supported Languages
+* Lithuanian.
+* English (work in progres).
+
 ## Contributing
 
 Here's how you can help:
