@@ -1,6 +1,6 @@
-# Invoice App
+# Invoices Generator
 
-This project aims to create a simple and user-friendly invoice generator. The focus is on providing a clean, intuitive interface that enables users to quickly and easily create professional-looking invoices.
+This project aims to create a simple user friendly invoices generator. Aim to provide a clean, intuitive interface that enables users to quickly and easily create and manage professional-looking invoices.
 
 ## Installation
 1. Clone the repository.
