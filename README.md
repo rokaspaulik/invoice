@@ -17,7 +17,7 @@ This project aims to create a simple and user-friendly invoice generator. The fo
 
 ## Supported Languages
 * Lithuanian.
-* English (work in progres).
+* English (work in progress).
 
 ## Contributing
 
