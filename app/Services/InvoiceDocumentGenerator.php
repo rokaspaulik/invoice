@@ -35,6 +35,7 @@ class InvoiceDocumentGenerator
             ->generateBuyerSellerCredentials($word)
             ->generateNotes($word);
 
+        // $this->exportAsPdf($word);
         $this->exportAsWord($word);
     }
 
@@ -173,5 +174,14 @@ class InvoiceDocumentGenerator
         $extension = '.docx';
 
         (IOFactory::createWriter($word, 'Word2007'))->save(sprintf('%s%s%s', $path, $filename, $extension));
+    }
+
+    private function exportAsPdf(PhpWord $word): void
+    {
+        $path = 'storage/output/';
+        $filename = 'output';
+        $extension = '.pdf';
+
+        (IOFactory::createWriter($word, 'PDF'))->save(sprintf('%s%s%s', $path, $filename, $extension));
     }
 }
